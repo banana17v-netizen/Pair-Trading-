@@ -1,0 +1,48 @@
+data:
+  timeframe: "5m"
+  out_dir: "data/ohlcv/5m"
+  feed: "iex"           # iex = free tier; sip = paid SIP feed
+  adjustment: "all"     # all = split + dividend adjusted
+  batch_size: 5         # symbols per Alpaca API request
+  batch_sleep: 0.5      # seconds between batches (rate limit buffer)
+
+backtest:
+  in_sample_years: 2
+  out_of_sample_months: 6
+  start: "2010-01-01"
+  end: "2025-01-01"
+
+pairs:
+  min_half_life_days: 3
+  max_half_life_days: 120    # empirical: full-period daily screening min ~54d
+  min_adf_pvalue: 0.05
+  max_pairs: 25
+  same_sector_only: true     # reduces 1378→170 pairs; better economic rationale
+  fdr_correction: false      # OFF for full-period (15y): signal too weak for BH-FDR
+                             # Enable for short walk-forward windows (<=2y) where
+                             # cointegration signal is stronger (min p typically <0.001)
+  fdr_alpha: 0.05
+
+kalman:
+  delta: 1.0e-5         # state transition noise (Q matrix scaling)
+  vt: 1.0e-3            # observation noise variance
+
+hmm:
+  n_states: 3
+  train_window_days: 252
+  retrain_freq_days: 21
+
+signals:
+  entry_zscore: 2.0
+  exit_zscore: 0.5
+  stop_zscore: 3.5
+
+risk:
+  max_notional_per_pair: 50_000
+  max_pairs_open: 15
+  max_portfolio_drawdown: 0.15
+  max_daily_loss: 0.03
+
+almgren_chriss:
+  gamma: 0.1            # permanent impact coefficient
+  eta: 0.01             # temporary impact coefficient

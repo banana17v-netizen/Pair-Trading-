@@ -1,0 +1,2 @@
+# Statistical Arbitrage System · Python, Alpaca API · 01/2010 – 01/2025
+Built equity pairs trading system across 50+ S&P 500 stocks using Kalman Filter hedge ratios and HMM regime detection; achieved Sharpe 1.4 after Almgren-Chriss cost modeling on 10-year walk-forward backtest; deployed live paper trading via Alpaca API with real-time signal execution.
